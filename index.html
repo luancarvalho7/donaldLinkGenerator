@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URL Referral Tool</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="url-tool">
+  <h1 id="titlezz">Criador Link App Sinais</h1>
+
+    <label for="input-link">Input link:</label>
+    <input type="text" id="input-link" placeholder="https://donald.bet/casino/pgsoft/fortune-tiger/?ref=190243&src=zayfqyfyzfczutosrfxlmtguv">
+    
+    <label for="output-link">Output:</label>
+    <input type="text" id="output-link" readonly>
+
+    <button id="copy-btn" onclick="processURL()">Copy</button>
+</div>
+<div id="notification"></div>
+<style> 
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#titlezz{
+    font-family: "Space Grotesk", sans-serif;
+}
+#url-tool {
+  margin: 0px 20px;
+}
+
+#input-link, #output-link {
+  margin-top: 6px;
+    width: 100%;
+    padding: 10px;
+    background-color: #202c33;
+    color: white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+input::placeholder {
+  color: #81888c;
+}
+#copy-btn {
+  margin-top: 12px;
+    padding: 10px;
+    width: 100%;
+    background: linear-gradient(87deg, #24FF00 5.19%, #7BFFB0 91.04%);    color: black;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/* Existing styles... */
+
+#notification {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+background: linear-gradient(90deg, #06070A -3.19%, #14210F 105.54%);
+    color: white;
+    padding: 10px;
+    border-radius: 999px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
+
+</style>
+<script>
+  function processURL() {
+    const inputElement = document.getElementById('input-link');
+    const outputElement = document.getElementById('output-link');
+    
+    const inputURL = inputElement.value;
+    const url = new URL(inputURL);
+    const refParam = url.searchParams.get('ref');
+
+    
+
+    if (refParam) {
+        const outputURL = `https://betlion.vercel.app/?ref=${refParam}`;
+        outputElement.value = outputURL;
+    } else {
+        outputElement.value = 'No ref param found in the input URL.';
+    }
+}
+
+// To copy the output URL to the clipboard
+document.getElementById('copy-btn').addEventListener('click', function() {
+    const outputElement = document.getElementById('output-link');
+    outputElement.select();
+    document.execCommand('copy');
+});
+
+// Existing function processURL...
+
+function showNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.style.display = 'block';
+    notification.style.opacity = 1;
+    notification.style.bottom = '40px'; // move up to draw attention
+    
+    setTimeout(() => {
+        notification.style.opacity = 0;
+        notification.style.bottom = '20px'; // move back to original position
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 500); // wait for fade out to finish before hiding
+    }, 2000); // time for the notification to stay visible
+}
+
+document.getElementById('copy-btn').addEventListener('click', function() {
+    const outputElement = document.getElementById('output-link');
+    outputElement.select();
+    document.execCommand('copy');
+    showNotification('URL copiada');
+});
+
+</script>
+</body>
+</html>
